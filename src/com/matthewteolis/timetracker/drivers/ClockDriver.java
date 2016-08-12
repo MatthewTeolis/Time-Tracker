@@ -1,16 +1,17 @@
+
 package com.matthewteolis.timetracker.drivers;
 
 import com.matthewteolis.timetracker.lib.Clock;
 
-public class ClockDriver implements Runnable
-{	
+public class ClockDriver //implements Runnable
+{
 	private Clock clock;
-	private Thread threadClock;
 	
 	private boolean alive;
 	private boolean running;
 	
-	private long millis, timeStopped;
+	private long millis;
+	private long timeStopped;
 	
 	public ClockDriver()
 	{
@@ -19,32 +20,46 @@ public class ClockDriver implements Runnable
 		this.millis = 0;
 		this.timeStopped = 0;
 		this.clock = new Clock();
-//		this.threadClock = new Thread(this, "Thread-Clock");
-//		this.threadClock.start();		
 	}
 	
+	/**
+	 * Start the clock.
+	 */
 	public void start()
 	{
 		this.millis = System.currentTimeMillis() - this.timeStopped;
 		this.running = true;
 	}
 	
+	/**
+	 * Stop the clock.
+	 */
 	public void stop()
 	{
-		timeStopped = System.currentTimeMillis() - this.millis;
+		this.timeStopped = System.currentTimeMillis() - this.millis;
 		this.running = false;
 	}
 	
+	/**
+	 * Check if the clock is alive.
+	 * @return
+	 */
 	public boolean isAlive()
 	{
 		return this.alive;
 	}
 	
+	/**
+	 * Destroy the clock.
+	 */
 	public void destroy()
 	{
 		this.alive = false;
 	}
 	
+	/**
+	 * Resets the clock time.
+	 */
 	public void reset()
 	{
 		this.stop();
@@ -54,26 +69,43 @@ public class ClockDriver implements Runnable
 		this.clock.setSecond(0);
 	}
 	
+	/**
+	 * Checks if the clock is running.
+	 * @return true if the clock is running, false otherwise.
+	 */
 	public boolean isRunning()
 	{
 		return this.running;
 	}
 	
+	/**
+	 * Set the milliseconds of the clock.
+	 * @param millis - long integer.
+	 */
 	public void setMillis(long millis)
 	{
 		this.millis = millis;
 	}
 	
+	/**
+	 * Get the milliseconds of the clock.
+	 * @return milliseconds - long integer.
+	 */
 	public long getMillis()
 	{
 		return this.millis;
 	}
 	
+	/**
+	 * Get the clock reference.
+	 * @return Clock object being used.
+	 */
 	public Clock getClock()
 	{
 		return this.clock;
 	}
 	
+	/*
 	@Override
 	public void run()
 	{
@@ -86,5 +118,5 @@ public class ClockDriver implements Runnable
 				this.clock.tickSecond();
 			}
 		}
-	}
+	}*/
 }
